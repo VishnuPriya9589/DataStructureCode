@@ -1,0 +1,148 @@
+class LinkedList{
+    Node head;
+   private int size;
+    public LinkedList(){
+           size=0;
+        }
+    class Node{
+        String data;
+        Node next;
+
+        public Node(String data){
+            this.data=data;
+            this.next=null;
+            size++;
+        }
+       
+    }
+//Add in first
+    public void addFirstNode(String data){
+        Node newNode=new Node(data);
+
+        if(head==null){
+            head=newNode;
+            return;
+        }
+        
+        newNode.next=head;
+        head=newNode;  
+
+    }
+//Add in last
+    public void addLastNode(String data){
+        
+        Node newNode=new Node(data);
+        if(head==null){
+            head=newNode;
+            return;
+        }
+        Node currNode=head;
+
+        while(currNode.next!=null){
+            currNode=currNode.next;
+        }
+        currNode.next=newNode;
+
+    }
+    
+//Remove node from first
+    public void deleteFromFirst(){
+       
+        if(head==null){
+           System.out.println("List is empty");
+           return;
+        }
+         size--;
+        head=head.next;
+    }
+
+//Remove node from last
+    public void deleteFromLast(){
+      
+        if(head==null){
+           System.out.println("List is empty");
+           return;
+        }
+          size--;
+        if(head.next==null){
+            head=null;
+            return;
+        }
+        Node secondLast=head;
+        Node lastNode=head.next;
+
+        while(lastNode.next!=null){
+             secondLast=secondLast.next;
+             lastNode=lastNode.next;
+        }
+        secondLast.next=null;
+
+    }
+
+//Print List
+    public void printList(){
+        if(head==null){
+            System.out.print("Empty Linked List");
+            return;
+        }
+
+        Node currNode=head;
+        while(currNode!=null){
+            System.out.print(currNode.data+"->");
+            currNode=currNode.next;
+        }
+        System.out.println("NULL");
+    }
+ 
+    //Size
+    public void getSize(){
+        System.out.println("size "+size);
+    }
+
+    //Reverse the list by using Iteration
+    public void reverseList(){
+        if(head==null||head.next==null){
+            return; 
+        }
+        Node prevNode=head;
+        Node currNode=head.next;
+        while(currNode!=null){
+            Node nextNode=currNode.next;
+            currNode.next=prevNode;
+
+            //update
+            prevNode=currNode;
+            currNode=nextNode;
+        }
+        head.next=null;
+        head=prevNode;
+    }
+
+    //Reverse list by using recursion
+    public Node reverseRecursive(Node head){
+        if(head==null || head.next==null){
+            return head;
+        }
+        Node newHead=reverseRecursive(head.next);
+        head.next.next=head;
+        head.next=null;
+        return newHead;
+    }
+
+    public static void main(String[] args){
+        LinkedList linklist= new LinkedList();
+        linklist.addFirstNode("are");
+        linklist.addFirstNode("You");
+        linklist.addLastNode("good boy");
+        linklist.addLastNode("and");
+        linklist.addLastNode("intelligent");
+        // linklist.printList();
+        // linklist.deleteFromFirst();
+        linklist.printList();
+        // linklist.deleteFromLast();
+        // linklist.reverseList();
+        linklist.head= linklist.reverseRecursive(linklist.head);
+        linklist.printList();
+       linklist.getSize();
+    }
+}
