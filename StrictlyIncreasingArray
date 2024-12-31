@@ -1,0 +1,32 @@
+public class StrictlyIncreasingArray {
+    public static boolean canBeIncreasing(int[] nums) {
+        int violations = 0; // To track the number of violations in the strictly increasing order
+
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i - 1] >= nums[i]) {
+                violations++;
+                if (violations > 1) {
+                    return false; // More than one violation means we can't fix it by removing one element
+                }
+                // Check if removing nums[i - 1] or nums[i] fixes the sequence
+                if (i > 1 && nums[i - 2] >= nums[i]) {
+                    nums[i] = nums[i - 1]; // Remove nums[i] by overriding it
+                }
+            }
+        }
+
+        return true;
+    }
+
+    public static void main(String[] args) {
+        // Test cases
+        int[] nums1 = {1, 2, 10, 5, 7};
+        int[] nums2 = {2, 3, 1, 2};
+        int[] nums3 = {1, 1, 1};
+
+        System.out.println(canBeIncreasing(nums1)); // Output: true
+        System.out.println(canBeIncreasing(nums2)); // Output: false
+        System.out.println(canBeIncreasing(nums3)); // Output: false
+    }
+}
+
